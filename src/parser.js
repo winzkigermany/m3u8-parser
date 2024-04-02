@@ -730,7 +730,27 @@ export default class Parser extends Stream {
                 entry.attributes,
                 ['SERVER-URI']
               );
-            }
+            },
+            plala() {
+              if (!('mediaSequence' in this.manifest)) {
+                this.manifest.mediaSequence = 0;
+                this.trigger('info', {
+                  message: 'defaulting media sequence to zero'
+                });
+              }
+              if (!('discontinuitySequence' in this.manifest)) {
+                this.manifest.discontinuitySequence = 0;
+                this.trigger('info', {
+                  message: 'defaulting discontinuity sequence to zero'
+                });
+              }
+
+              if (entry.command) {
+                currentUri.title = entry.command;
+              }
+              this.manifest.segments = uris;
+            },            
+            
           })[entry.tagType] || noop).call(self);
         },
         uri() {
