@@ -634,7 +634,18 @@ export default class ParseStream extends Stream {
         this.trigger('data', event);
         return;
       }
-
+      match = (/^#hoerbert:(.*)$/).exec(newLine);
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'plala'
+        };
+        if (match[1]) {
+          event.command = match[1];
+        }
+        this.trigger('data', event);
+        return;
+      }
       // unknown tag type
       this.trigger('data', {
         type: 'tag',
